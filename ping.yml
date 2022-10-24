@@ -1,0 +1,8 @@
+---
+- name: ping all hosts
+  hosts: all
+  become: false
+
+  tasks:
+    - name: just ping
+      ping:
