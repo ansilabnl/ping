@@ -4,5 +4,11 @@
   become: false
 
   tasks:
+    - name: show some info
+      debug:
+        msg:
+          - Hostname   = {{ ansible_facts['hostname'] }}
+          - IP address = {{ ansible_facts['ansible_default_ipv4']['address'] }}
+
     - name: just ping
       ping:
