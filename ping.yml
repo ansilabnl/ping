@@ -8,7 +8,7 @@
       debug:
         msg:
           - Hostname   = {{ ansible_facts['hostname'] }}
-          - IP address = {{ ansible_facts['ansible_default_ipv4']['address'] }}
+          - IP address = {{ ansible_facts['default_ipv4']['address'] }}
 
     - name: just ping
       ping:
