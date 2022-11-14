@@ -6,6 +6,10 @@
   tasks:
     - name: show some info
       debug:
+        msg: Facts = {{ ansible_facts }}
+
+    - name: show some info
+      debug:
         msg:
           - Hostname   = {{ ansible_facts['hostname'] }}
           - Hostname   = {{ ansible_facts['fqdn'] }}
