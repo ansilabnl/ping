@@ -1,19 +1,21 @@
 ---
-- name: ping all hosts
+- name: Ping all hosts
   hosts: all
   become: false
 
   tasks:
     - name: show some info
       debug:
-        msg: Facts = {{ ansible_facts }}
-
-    - name: show some info
-      debug:
         msg:
-          - Hostname   = {{ ansible_facts['hostname'] }}
-          - Hostname   = {{ ansible_facts['fqdn'] }}
-          - IP address = {{ ansible_facts['default_ipv4']['address'] }}
+          - Hostname         = {{ ansible_facts['hostname'] }}
+          - FQDN             = {{ ansible_facts['fqdn'] }}
+          - IP address       = {{ ansible_facts['default_ipv4']['address'] }}
+          - Architecture     = {{ ansible_facts['ansible_architecture'] }}
+          - OS family        = {{ ansible_facts['os_family' }}
+          - OS Distribution  = {{ ansible_facts['distribution' }}
+          - OS Major version = {{ ansible_facts['distribution_major_version' }}
+          - OS Version       = {{ ansible_facts['distribution_version' }}
 
     - name: just ping
       ping:
+
