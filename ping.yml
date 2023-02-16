@@ -7,14 +7,17 @@
     - name: show some info
       debug:
         msg:
-          - Hostname         = {{ ansible_facts['hostname'] }}
-          - FQDN             = {{ ansible_facts['fqdn'] }}
-          - IP address       = {{ ansible_facts['default_ipv4']['address'] }}
-          - Architecture     = {{ ansible_facts['architecture'] }}
-          - OS family        = {{ ansible_facts['os_family' }}
-          - OS Distribution  = {{ ansible_facts['distribution' }}
-          - OS Major version = {{ ansible_facts['distribution_major_version' }}
-          - OS Version       = {{ ansible_facts['distribution_version' }}
+          - Hostname            = {{ ansible_facts['hostname'] }}
+          - FQDN                = {{ ansible_facts['fqdn'] }}
+          - IP address          = {{ ansible_facts['default_ipv4']['address'] }}
+          - Architecture        = {{ ansible_facts['architecture'] }}
+          - OS family           = {{ ansible_facts['os_family'] }}
+          - OS Distribution     = {{ ansible_facts['distribution'] }}
+          - OS Major version    = {{ ansible_facts['distribution_major_version'] }}
+          - OS Version          = {{ ansible_facts['distribution_version'] }}
+          - Memory (MB)         = {{ ansible_facts['memtotal_mb'] }}
+          - Processor cores     = {{ ansible_facts['processor_cores'] }}
+          - Virtualization role = {{ ansible_facts['virtualization_role'] }}
 
     - name: just ping
       ping:
