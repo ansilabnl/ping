@@ -18,6 +18,7 @@
           - Memory (MB)         = {{ ansible_facts['memtotal_mb'] }}
           - Processor cores     = {{ ansible_facts['processor_cores'] }}
           - Virtualization role = {{ ansible_facts['virtualization_role'] }}
+          - Decrypted password  = {{ my_passwd }}
 
     - name: just ping
       ping:
