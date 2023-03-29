@@ -4,7 +4,7 @@
   become: false
 
   tasks:
-    - name: show some info
+    - name: Show some system info
       debug:
         msg:
           - Hostname            = {{ ansible_facts['hostname'] }}
@@ -19,6 +19,17 @@
           - Processor cores     = {{ ansible_facts['processor_cores'] }}
           - Virtualization role = {{ ansible_facts['virtualization_role'] }}
           - Decrypted password  = {{ my_passwd }}
+
+    - name: Show variable values when they are defined
+      debug:
+        msg:
+          - firstname = {{ firstname }}
+          - lastname  = {{ lastname }}
+          - skills    = {{ skills }}
+      when:
+        - firstname is defined
+        - lastname  is defined
+        - skills    is defined
 
     - name: just ping
       ping:
