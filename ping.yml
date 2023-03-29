@@ -22,7 +22,7 @@
 
     - name: Convert skills to list, if defined
       ansible.builtin.set_fact:
-        skills: "{{ skills.split('\n') }}"
+        skill_list: "{{ skills.split('\n') }}"
       when:
         - skills is defined
         - skills is string
@@ -32,12 +32,12 @@
         msg:
           - firstname = {{ firstname }}
           - lastname  = {{ lastname }}
-          - skills    = {{ skills }}
+          - skills    = {{ skill_list }}
           - holiday   = {{ holiday | default('Stayed at home') }}
       when:
-        - firstname is defined
-        - lastname  is defined
-        - skills    is defined
+        - firstname  is defined
+        - lastname   is defined
+        - skill_list is defined
 
     - name: just ping
       ping:
