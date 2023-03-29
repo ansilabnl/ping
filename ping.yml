@@ -20,6 +20,13 @@
           - Virtualization role = {{ ansible_facts['virtualization_role'] }}
           - Decrypted password  = {{ my_passwd }}
 
+    - name: Convert skills to list, if defined
+      ansible.builtin.set_fact:
+        skills: "{{ skills.split('\n') }}"
+      when:
+        - skills is defined
+        - skills is string
+
     - name: Show variable values when they are defined
       debug:
         msg:
