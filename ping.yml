@@ -26,6 +26,7 @@
           - firstname = {{ firstname }}
           - lastname  = {{ lastname }}
           - skills    = {{ skills }}
+          - holiday   = {{ holiday | default('Stayed at home') }}
       when:
         - firstname is defined
         - lastname  is defined
