@@ -2,6 +2,15 @@
 - name: Ping all hosts
   hosts: all
   become: false
+  
+  vars:
+    my_passwd: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      34323966633363396432333938313739353233613663333066303231313839623334336435313833
+      6462336132653464353837333034306465313163336461660a346136393133633266326333396432
+      34396639633132396339613431663964346531653235323364353035353261313838613639373564
+      6631356431613837610a613637353962386138306639313039343234373165303765396337613034
+      64333535383933326234323665366337633530313838376564636535643534613163
 
   tasks:
     - name: Show some system info
@@ -19,10 +28,6 @@
           - Processor cores     = {{ ansible_facts['processor_cores'] }}
           - Virtualization role = {{ ansible_facts['virtualization_role'] }}
           - Decrypted password  = {{ my_passwd | default('Unknown')}}
-          - "{{ '{:=^70}'.format(' Local facts ') }}"
-          - System function     = {{ ansible_local['sysinfo']['system']['function'] | default('Unknown') }}
-          - System Location     = {{ ansible_local['sysinfo']['system']['location'] | default('Unknown') }}
-          - System VMware name  = {{ ansible_local['sysinfo']['system']['vmware_name'] | default('Unknown') }}
 
     - name: Convert skills to list, if defined
       ansible.builtin.set_fact:
