@@ -29,9 +29,10 @@
           - Virtualization role = {{ ansible_facts['virtualization_role'] }}
           - Decrypted password  = {{ my_passwd | default('Unknown')}}
           - "{{ '{:=^70}'.format(' Local facts ') }}"
-          - System function     = {{ ansible_local['sysinfo']['system']['function'] | default('Unknown') }}
-          - System Location     = {{ ansible_local['sysinfo']['system']['location'] | default('Unknown') }}
-          - System VMware name  = {{ ansible_local['sysinfo']['system']['vmware_name'] | default('Unknown') }}
+          - System function     = {{ ansible_local['sysinfo']['system']['function']   | default('Unknown') }}
+          - System Location     = {{ ansible_local['sysinfo']['system']['location']   | default('Unknown') }}
+          - System VMware name  = {{ ansible_local['sysinfo']['system']['host_alias'] | default('Unknown') }}
+          - "{{ '{:=^70}'.format(' Local facts ') }}"
 
     - name: Convert skills to list, if defined
       ansible.builtin.set_fact:
