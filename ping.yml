@@ -28,7 +28,7 @@
           - Processor cores     = {{ ansible_facts['processor_cores'] }}
           - Virtualization role = {{ ansible_facts['virtualization_role'] }}
           - Decrypted password  = {{ my_passwd | default('Unknown')}}
-          - "{{ '{:=^70}'.format(' Local facts ') }}"
+          - "{{ '{:=^70}'.format(' Local facts (some of them) ') }}"
           - System function     = {{ ansible_local['sysinfo']['system']['function']   | default('Unknown') }}
           - System Location     = {{ ansible_local['sysinfo']['system']['location']   | default('Unknown') }}
           - System VMware name  = {{ ansible_local['sysinfo']['system']['host_alias'] | default('Unknown') }}
