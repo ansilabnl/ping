@@ -9,7 +9,7 @@
         msg:
           - Hostname            = {{ ansible_facts['hostname'] }}
           - FQDN                = {{ ansible_facts['fqdn'] }}
-          - IP address          = {{ ansible_facts['default_ipv4']['address'] }}
+          - IP address          = {{ ansible_facts['default_ipv4']['address'] | default('Unknown') }}
           - Architecture        = {{ ansible_facts['architecture'] }}
           - OS family           = {{ ansible_facts['os_family'] }}
           - OS Distribution     = {{ ansible_facts['distribution'] }}
