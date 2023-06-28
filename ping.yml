@@ -45,4 +45,3 @@
 
     - name: just ping
       ping:
-
