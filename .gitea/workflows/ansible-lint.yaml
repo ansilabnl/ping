@@ -5,8 +5,7 @@ jobs:
     name: Ansible Lint # Naming the build is important to use it as a status check
     runs-on: linter
     steps:
-      - name: Run ansible-lint
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       - run: |
         date > generated.txt
         /usr/local/bin/yamllint
