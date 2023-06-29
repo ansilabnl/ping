@@ -43,5 +43,5 @@
         - lastname   is defined
         - skill_list is defined
 
-    - ansible.builtin.name: Just ping the server
-      ping:
+    - name: Just ping the server
+      ansible.builtin.ping:
