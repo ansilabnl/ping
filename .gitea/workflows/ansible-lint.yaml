@@ -1,12 +1,11 @@
 name: ansible-lint
 on: [push]
 jobs:
-  build:
-    name: Ansible Lint # Naming the build is important to use it as a status check
+  check-ansible-code:
+    name: Ansible Lint
     runs-on: linter
     steps:
       - uses: actions/checkout@v3
-      - run: |
-        date > generated.txt
-        /usr/local/bin/yamllint
-        /usr/local/bin/ansible-lint
+      - run: /usr/local/bin/yamllint
+      - run: /usr/local/bin/ansible-lint
+
