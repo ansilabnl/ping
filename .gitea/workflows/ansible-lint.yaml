@@ -6,4 +6,8 @@ jobs:
     runs-on: linter
     steps:
       - name: Run ansible-lint
-        uses: "https://git.ansilab.nl/tonk/ping.git"
+        uses: actions/checkout@v3
+      - run: |
+        date > generated.txt
+        /usr/local/bin/yamllint
+        /usr/local/bin/ansible-lint
