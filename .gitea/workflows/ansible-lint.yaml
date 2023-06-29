@@ -6,6 +6,6 @@ jobs:
     runs-on: linter
     steps:
       - uses: actions/checkout@v3
-      - run: /usr/local/bin/yamllint
+      - run: /usr/local/bin/yamllint *.yml
       - run: /usr/local/bin/ansible-lint
 
