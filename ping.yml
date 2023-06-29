@@ -5,7 +5,7 @@
 
   tasks:
     - name: Show some system info
-      debug:
+      ansible.builtin.debug:
         msg:
           - Hostname            = {{ ansible_facts['hostname'] }}
           - FQDN                = {{ ansible_facts['fqdn'] }}
@@ -18,7 +18,7 @@
           - Memory (MB)         = {{ ansible_facts['memtotal_mb'] }}
           - Processor cores     = {{ ansible_facts['processor_cores'] }}
           - Virtualization role = {{ ansible_facts['virtualization_role'] }}
-          - Decrypted password  = {{ my_passwd | default('Unknown')}}
+          - Decrypted password  = {{ my_passwd | default('Unknown') }}
           - "{{ '{:=^70}'.format(' Local facts ') }}"
           - System function     = {{ ansible_local['sysinfo']['system']['function'] | default('Unknown') }}
           - System Location     = {{ ansible_local['sysinfo']['system']['location'] | default('Unknown') }}
@@ -32,7 +32,7 @@
         - skills is string
 
     - name: Show variable values when they are defined
-      debug:
+      ansible.builtin.debug:
         msg:
           - firstname = {{ firstname }}
           - lastname  = {{ lastname }}
@@ -43,5 +43,5 @@
         - lastname   is defined
         - skill_list is defined
 
-    - name: just ping
+    - ansible.builtin.name: Just ping the server
       ping:
