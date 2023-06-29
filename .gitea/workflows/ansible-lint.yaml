@@ -6,4 +6,4 @@ jobs:
     runs-on: linter
     steps:
       - name: Run ansible-lint
-        uses: tonk/ping@main # or version tag instead of 'main'
+        uses: "https://git.ansilab.nl/tonk/ping.git"
