@@ -1,5 +1,7 @@
+---
 name: ansible-lint
 on: [push]
+
 jobs:
   check-ansible-code:
     name: Ansible Lint
@@ -8,4 +10,15 @@ jobs:
       - uses: actions/checkout@v3
       - run: /usr/local/bin/yamllint *.yml
       - run: /usr/local/bin/ansible-lint
+  fire_and_forget:
+    name: Trigger playbook in AAP
+    runs-on: linter
+    run: |
+      curl -k -f -i
+      -H 'Content-Type:application/json'
+      -XPOST -d "{\"host_config_key\": \"$KEY\"}"
+	    $AAP_HOST//api/v2/job_templates/11/callback/
+    env:
+      AAP_HOST: "https://aap.ansilab.nl"
+      KEY: "q0jUeNCqP2PPZh8jIGdSCHYHCUgZuA"
 
