@@ -17,9 +17,6 @@ jobs:
       - run: |
           curl -k -f -i
           -H 'Content-Type:application/json'
-          -XPOST -d "{\"host_config_key\": \"$KEY\"}"
-          $AAP_HOST/api/v2/job_templates/11/callback/
-    env:
-      AAP_HOST: "https://aap.ansilab.nl"
-      KEY: "q0jUeNCqP2PPZh8jIGdSCHYHCUgZuA"
+          -XPOST -d '{"host_config_key": " "q0jUeNCqP2PPZh8jIGdSCHYHCUgZuA"}'
+          https://aap.ansilab.nl/api/v2/job_templates/11/callback/
 
