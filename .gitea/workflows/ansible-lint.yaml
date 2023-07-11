@@ -1,10 +1,10 @@
 ---
-name: ansible-lint
+name: check_and_fire
 on: [push]
 
 jobs:
   check-ansible-code:
-    name: Ansible Lint
+    name: Linters
     runs-on: linter
     steps:
       - uses: actions/checkout@v3
@@ -15,7 +15,7 @@ jobs:
     name: Trigger playbook in AAP
     runs-on: linter
     steps:
-      - run: |
+      - run: >
           curl -k -f -i
           -H 'Content-Type:application/json'
           -XPOST -d '{"host_config_key": "q0jUeNCqP2PPZh8jIGdSCHYHCUgZuA"}'
