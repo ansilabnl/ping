@@ -1,5 +1,5 @@
 ---
-name: check_and_fire
+name: check_fire_and_forget
 on: [push]
 
 jobs:
