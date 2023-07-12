@@ -4,14 +4,21 @@
   become: false
 
   tasks:
-    - name: Show some information
+    - name: Show Ansible and Python information
+      run_once: true
       ansible.builtin.debug:
         msg:
           - "{{ '{:=^70}'.format(' Ansible and Python information ') }}"
           - Ansible version     = {{ ansible_version['full'] }}
           - Ansible user        = {{ ansible_user }}
+          - Ansible config file = {{ ansible_config_file }}
+          - Ansible check mode  = {{ ansible_check_mode }}
           - Python version      = {{ ansible_facts['python_version'] }}
           - Python executable   = {{ ansible_facts['python']['executable'] }}
+
+    - name: Show system information
+      ansible.builtin.debug:
+        msg:
           - "{{ '{:=^70}'.format(' System information ') }}"
           - Hostname            = {{ ansible_facts['hostname'] }}
           - FQDN                = {{ ansible_facts['fqdn'] }}
