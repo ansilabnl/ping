@@ -16,7 +16,6 @@
           - Ansible check mode  = {{ ansible_check_mode }}
           - Python version      = {{ ansible_facts['python_version'] }}
           - Python executable   = {{ ansible_facts['python']['executable'] }}
-          - Hostname            = {{ ansible_facts['hostname'] }}
 
     - name: Show system information
       ansible.builtin.debug:
