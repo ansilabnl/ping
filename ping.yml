@@ -6,6 +6,7 @@
   tasks:
     - name: Show Ansible and Python information
       run_once: true
+      delegate_to: localhost
       ansible.builtin.debug:
         msg:
           - "{{ '{:=^70}'.format(' Ansible and Python information ') }}"
@@ -23,6 +24,8 @@
           - Hostname            = {{ ansible_facts['hostname'] }}
           - FQDN                = {{ ansible_facts['fqdn'] }}
           - IP address          = {{ ansible_facts['default_ipv4']['address'] | default('Unknown') }}
+          - Python version      = {{ ansible_facts['python_version'] }}
+          - Python executable   = {{ ansible_facts['python']['executable'] }}
           - Architecture        = {{ ansible_facts['architecture'] }}
           - OS family           = {{ ansible_facts['os_family'] }}
           - OS Distribution     = {{ ansible_facts['distribution'] }}
