@@ -54,14 +54,6 @@
           - lastname  = {{ lastname }}
           - skills    = {{ skill_list }}
           - holiday   = {{ holiday | default('Stayed at home') }}
-
-    - name: Show variable values when they are defined
-      ansible.builtin.debug:
-        msg:
-          - firstname = {{ firstname }}
-          - lastname  = {{ lastname }}
-          - skills    = {{ skill_list }}
-          - holiday   = {{ holiday | default('Stayed at home') }}
       when:
         - firstname  is defined
         - lastname   is defined
