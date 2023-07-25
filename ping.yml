@@ -1,5 +1,5 @@
 ---
-- name: Ping all hosts
+- name: Ping all hosts 11
   hosts: all
   become: false
 
