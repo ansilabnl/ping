@@ -1,0 +1,22 @@
+---
+name: check_fire_and_forget
+on: [push]            # yamllint disable-line rule:truthy
+
+jobs:
+  check-ansible-code:
+    name: Linters
+    runs-on: runner
+    steps:
+      - uses: actions/checkout@v3
+      - run: /usr/local/bin/yamllint *.yml
+      - run: /usr/local/bin/ansible-lint
+
+  fire_and_forget:
+    name: Trigger deployment playbook in AWX
+    runs-on: runner
+    steps:
+      - run: >
+          curl -k -f -i
+          -H 'Content-Type:application/json'
+          -XPOST -d '{"host_config_key": "q0jUeNCqP2PPZh8jIGdSCHYHCUgZuA"}'
+          http://awx.ansiblelab.nl/api/v2/job_templates/398/callback
