@@ -1,10 +1,10 @@
 ---
-name: check_fire_and_forget
+name: system_provisioning
 on: [push]            # yamllint disable-line rule:truthy
 
 jobs:
   check-ansible-code:
-    name: Linters
+    name: Run linters
     runs-on: runner
     steps:
       - uses: actions/checkout@v3
@@ -12,11 +12,11 @@ jobs:
       - run: /usr/local/bin/ansible-lint
 
   fire_and_forget:
-    name: Trigger deployment playbook in AWX
+    name: Trigger provisioning playbook in AWX
     runs-on: runner
     steps:
       - run: >
           curl -k -f -i
           -H 'Content-Type:application/json'
-          -XPOST -d '{"host_config_key": "q0jUeNCqP2PPZh8jIGdSCHYHCUgZuA"}'
-          http://awx.ansiblelab.nl/api/v2/job_templates/398/callback
+          -XPOST -d '{"host_config_key": "<Host Config Key>"}'
+          http://awx.ansiblelab.nl/api/v2/job_templates/<Template ID>/callback
