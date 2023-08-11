@@ -1,6 +1,6 @@
 ---
 name: check_fire_and_forget
-on: [push]            # yamllint disable-line rule:truthy
+on: [push]           # yamllint disable-line rule:truthy
 
 jobs:
   check-ansible-code:
