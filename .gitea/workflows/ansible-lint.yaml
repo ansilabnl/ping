@@ -18,5 +18,5 @@ jobs:
       - run: >
           curl -k -f -i
           -H 'Content-Type:application/json'
-          -XPOST -d '{"host_config_key": "${{ secret.AAP_APPL_TOKEN }}"}'
+          -XPOST -d '{"host_config_key": "${{ secrets.AAP_APPL_TOKEN }}"}'
           https://192.168.255.50/api/v2/job_templates/11/callback/
