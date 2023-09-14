@@ -8,19 +8,10 @@
     # Convert that to the "normal" ones
     firstname: "{{ awx_webhook_payload['firstname'] if (awx_webhook_payload['firstname'] is defined) }}"
     lastname: "{{  awx_webhook_payload['lastname']  if (awx_webhook_payload['lastname']  is defined) }}"
-    skills: "{{    awx_webhook_payload['skills']    if (awx_webhook_payload['skills']    is defined) }}"
     holiday: "{{   awx_webhook_payload['holiday']   if (awx_webhook_payload['holiday']   is defined) }}"
+    skills: "{{   (awx_webhook_payload['skills'] | join('\n')) if (awx_webhook_payload['skills'] is defined) }}"
 
   tasks:
-    - name: Show stuff
-      ansible.builtin.debug:
-        msg:
-          - payload   = {{ awx_webhook_payload | default('Lalaland') }}
-          - firstname = {{ firstname  | default('Lalaland') }}
-          - lastname  = {{ lastname   | default('Lalaland')}}
-          - skills    = {{ skills     | default('Lalaland')}}
-          - holiday   = {{ holiday    | default('Lalaland') }}
-
     - name: Show Ansible and Python information
       delegate_to: localhost
       ansible.builtin.debug:
