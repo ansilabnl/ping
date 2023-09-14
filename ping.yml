@@ -39,6 +39,17 @@
           - System Location     = {{ ansible_local['sysinfo']['system']['location'] | default('Unknown') }}
           - System VMware name  = {{ ansible_local['sysinfo']['system']['vmware_name'] | default('Unknown') }}
 
+    # If called through a webhook, the extra variables are in the `awx_webhook_payload` variable
+    # Converts that to the "normal" ones
+    - name: Convert awx_webhook_payload to local variable, if defined
+      ansible.builtin.set_fact:
+        firstname: "{{ awx_webhook_payload['firstname'] | default('Zaphod') }}"
+        lastname: "{{ awx_webhook_payload['lastname'] | default('Beeblebrox')}}"
+        skills: "{{ awx_webhook_payload['skills'] | default('Steal spaceship')}}"
+        holiday: "{{ awx_webhook_payload['holiday'] | default('cwThe Illegal Bistro') }}"
+      when:
+        - awx_webhook_payload is defined
+
     - name: Convert skills to list, if defined
       ansible.builtin.set_fact:
         skill_list: "{{ skills.split('\n') }}"
