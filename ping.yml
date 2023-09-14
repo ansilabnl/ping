@@ -12,6 +12,15 @@
     holiday: "{{   awx_webhook_payload['holiday']   if (awx_webhook_payload['holiday']   is defined) }}"
 
   tasks:
+    - name: Show stuff
+      ansible.builtin.debug:
+        msg:
+          - payload   = {{ awx_webhook_payload | default('Lalaland') }}
+          - firstname = {{ firstname  | default('Lalaland') }}
+          - lastname  = {{ lastname   | default('Lalaland')}}
+          - skills    = {{ skills     | default('Lalaland')}}
+          - holiday   = {{ holiday    | default('Lalaland') }}
+
     - name: Show Ansible and Python information
       delegate_to: localhost
       ansible.builtin.debug:
