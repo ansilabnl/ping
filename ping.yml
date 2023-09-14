@@ -3,6 +3,14 @@
   hosts: all
   become: false
 
+  vars:
+    # If called through a webhook, the extra variables are in the `awx_webhook_payload` variable
+    # Convert that to the "normal" ones
+    firstname: "{{ awx_webhook_payload['firstname'] if (awx_webhook_payload['firstname'] is defined) }}"
+    lastname: "{{  awx_webhook_payload['lastname']  if (awx_webhook_payload['lastname']  is defined) }}"
+    skills: "{{    awx_webhook_payload['skills']    if (awx_webhook_payload['skills']    is defined) }}"
+    holiday: "{{   awx_webhook_payload['holiday']   if (awx_webhook_payload['holiday']   is defined) }}"
+
   tasks:
     - name: Show Ansible and Python information
       delegate_to: localhost
@@ -39,22 +47,11 @@
           - System Location     = {{ ansible_local['sysinfo']['system']['location'] | default('Unknown') }}
           - System VMware name  = {{ ansible_local['sysinfo']['system']['vmware_name'] | default('Unknown') }}
 
-    # If called through a webhook, the extra variables are in the `awx_webhook_payload` variable
-    # Converts that to the "normal" ones
-    - name: Convert awx_webhook_payload to local variable, if defined
-      ansible.builtin.set_fact:
-        firstname: "{{ awx_webhook_payload['firstname'] | default('Zaphod') }}"
-        lastname: "{{ awx_webhook_payload['lastname'] | default('Beeblebrox')}}"
-        skills: "{{ awx_webhook_payload['skills'] | default('Steal spaceship')}}"
-        holiday: "{{ awx_webhook_payload['holiday'] | default('cwThe Illegal Bistro') }}"
-      when:
-        - awx_webhook_payload is defined
-
     - name: Convert skills to list, if defined
       ansible.builtin.set_fact:
         skill_list: "{{ skills.split('\n') }}"
       when:
-        - skills is defined
+        - skills is defined and skills
         - skills is string
 
     - name: Show variable values when they are defined
@@ -65,8 +62,8 @@
           - skills    = {{ skill_list }}
           - holiday   = {{ holiday | default('Stayed at home') }}
       when:
-        - firstname  is defined
-        - lastname   is defined
+        - firstname  is defined and firstname
+        - lastname   is defined and lastname
         - skill_list is defined
 
     - name: Just ping the server
