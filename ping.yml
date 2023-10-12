@@ -28,7 +28,6 @@
           when: ev.stat.exists
 
         - name: Show Ansible and Python information
-          delegate_to: localhost
           ansible.builtin.debug:
             msg:
               - "{{ '{:=^70}'.format(' Ansible and Python information ') }}"
@@ -42,6 +41,7 @@
               - Full playbook name  = {{ ansible_facts['playbookfull'] | default('Unknown') }}
               - Python version      = {{ ansible_facts['python_version'] }}
               - Python executable   = {{ ansible_facts['python']['executable'] }}
+      delegate_to: localhost
       run_once: true
 
     - name: Show system information
