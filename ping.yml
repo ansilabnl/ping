@@ -12,6 +12,9 @@
     skills: "{{   (awx_webhook_payload['skills'] | join('\n')) if (awx_webhook_payload['skills'] is defined) }}"
 
   tasks:
+    - name: Collect all commandline parameters
+      get_argv:
+
     - name: Show Ansible and Python information
       delegate_to: localhost
       ansible.builtin.debug:
@@ -21,8 +24,12 @@
           - Ansible user        = {{ ansible_user }}
           - Ansible config file = {{ ansible_config_file }}
           - Ansible check mode  = {{ ansible_check_mode }}
+          - Ansible commandline = {{ ansible_facts['argv'] | default('None') }}
+          - Playbook name       = {{ ansible_facts['playbookfname'] | default('Unknown') }}
+          - Full playbook name  = {{ ansible_facts['playbookfull'] | default('Unknown') }}
           - Python version      = {{ ansible_facts['python_version'] }}
           - Python executable   = {{ ansible_facts['python']['executable'] }}
+      run_once: true
 
     - name: Show system information
       ansible.builtin.debug:
