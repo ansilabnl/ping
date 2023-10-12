@@ -37,8 +37,7 @@
               - Ansible check mode  = {{ ansible_check_mode }}
               - Ansible commandline = {{ ansible_facts['argv'] | default('None') }}
               - Ansible extra vars  = {{ extravars | default('None') }}
-              - Playbook name       = {{ ansible_facts['playbookfname'] | default('Unknown') }}
-              - Full playbook name  = {{ ansible_facts['playbookfull'] | default('Unknown') }}
+              - Playbooks           = {{ ansible_facts['playbooks'] | default('Unknown') }}
               - Python version      = {{ ansible_facts['python_version'] }}
               - Python executable   = {{ ansible_facts['python']['executable'] }}
       delegate_to: localhost
