@@ -25,7 +25,7 @@
         - name: Collect extra vars if persent
           ansible.builtin.set_fact:
             extravars: "{{ lookup('ansible.builtin.file', '/runner/env/extravars') }}"
-          when: ev.exists
+          when: ev.stat.exists
 
         - name: Show Ansible and Python information
           delegate_to: localhost
