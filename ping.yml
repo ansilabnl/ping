@@ -97,7 +97,7 @@
 
     - name: Show firstjob
       ansible.builtin.debug:
-        msg: Firstjob = {{ firstjob }}
+        msg: Firstjob = {{ firstjob | default('Eehhh') }}
 
     # Fail on request, to demonstrate in an AAP workflow
     # Only fail when this is the first job
