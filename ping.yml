@@ -88,8 +88,22 @@
     - name: Just ping the server
       ansible.builtin.ping:
 
+    # Set stats to keep a value between jobs in a workflow
+    - name: Set first job run
+      ansible.builtin.set_stats:
+        data:
+          firstjob: true
+      when: not (firstjob | default(false))
+
+    - name: Show firstjob
+      ansible.builtin.debug:
+        msg: Firstjob = {{ firstjob }}
+
     # Fail on request, to demonstrate in an AAP workflow
+    # Only fail when this is the first job
     - name: Fail when requested
       ansible.builtin.fail:
         msg: Fail requested for demo purposes
-      when: (dofail | bool) | default(false)
+      when:
+        - firstjob | default(false)
+        - (dofail | bool) | default(false)
