@@ -87,3 +87,9 @@
 
     - name: Just ping the server
       ansible.builtin.ping:
+
+    # Fail on request, to demonstrate in an AAP workflow
+    - name: Fail when requested
+      ansible.builtin.fail:
+        msg: Fail requested for demo purposes
+      when: (dofail | bool) | default(false)
