@@ -92,12 +92,13 @@
     - name: Set first job run
       ansible.builtin.set_stats:
         data:
-          firstjob: true
-      when: not (firstjob | default(false))
+          firstjob: 0
+        per_host: false
+      when: (firstjob | default(0)) == 0
 
     - name: Show firstjob
       ansible.builtin.debug:
-        msg: Firstjob = {{ firstjob | default('Eehhh') }}
+        msg: firstjob = {{ firstjob | default(0) }}
 
     # Fail on request, to demonstrate in an AAP workflow
     # Only fail when this is the first job
@@ -105,5 +106,5 @@
       ansible.builtin.fail:
         msg: Fail requested for demo purposes
       when:
-        - firstjob | default(false)
-        - (dofail | bool) | default(false)
+        - (firstjob | default(0)) == 0
+        - (dofail | default(false)) | bool
