@@ -1,0 +1,22 @@
+---
+name: check_fire_and_forget
+on: [push]           # yamllint disable-line rule:truthy
+
+jobs:
+  check-ansible-code:
+    name: Linters
+    runs-on: linter
+    steps:
+      - uses: actions/checkout@v3
+      - run: /usr/local/bin/yamllint *.yml
+      - run: /usr/local/bin/ansible-lint
+
+  fire_and_forget:
+    name: Trigger deployment playbook in AAP
+    runs-on: linter
+    steps:
+      - run: >
+          curl -k -f -i
+          -H 'Content-Type:application/json'
+          -XPOST -d '{"host_config_key": "${{ secrets.AAP_APPL_TOKEN }}"}'
+          https://192.168.255.50/api/v2/job_templates/11/callback/

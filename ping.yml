@@ -14,14 +14,56 @@
       35343961623530623665363139356432336230626333396238316530663263323466346337383139
       3766616162363735630a353232376261323738643234303533386463303132643031613662366139
       31623966323230346532356337353762663863653634633233333362346634616564
+    #
+    # If called through a webhook, the extra variables are in the `awx_webhook_payload` variable
+    # Convert that to the "normal" ones
+    #
+    firstname: "{{ awx_webhook_payload['firstname'] if (awx_webhook_payload['firstname'] is defined) }}"
+    lastname: "{{  awx_webhook_payload['lastname']  if (awx_webhook_payload['lastname']  is defined) }}"
+    holiday: "{{   awx_webhook_payload['holiday']   if (awx_webhook_payload['holiday']   is defined) }}"
+    skills: "{{   (awx_webhook_payload['skills'] | join('\n')) if (awx_webhook_payload['skills'] is defined) }}"
 
   tasks:
-    - name: Show some system info
-      debug:
+    - name: Run special things on localhost
+      block:
+        - name: Collect all commandline parameters
+          get_argv:
+
+        - name: Check for extra vars
+          ansible.builtin.stat:
+            path: /runner/env/extravars
+          register: ev
+
+        - name: Collect extra vars if persent
+          ansible.builtin.set_fact:
+            extravars: "{{ lookup('ansible.builtin.file', '/runner/env/extravars') }}"
+          when: ev.stat.exists
+
+        - name: Show Ansible and Python information
+          ansible.builtin.debug:
+            msg:
+              - "{{ '{:=^70}'.format(' Ansible and Python information ') }}"
+              - Ansible version     = {{ ansible_version['full'] }}
+              - Ansible user        = {{ ansible_user }}
+              - Ansible config file = {{ ansible_config_file }}
+              - Ansible check mode  = {{ ansible_check_mode }}
+              - Ansible commandline = {{ ansible_facts['argv'] | default('None') }}
+              - Ansible extra vars  = {{ extravars | default('None') }}
+              - Playbooks           = {{ ansible_facts['playbooks'] | default('Unknown') }}
+              - Python version      = {{ ansible_facts['python_version'] }}
+              - Python executable   = {{ ansible_facts['python']['executable'] }}
+      delegate_to: localhost
+      run_once: true
+
+    - name: Show system information
+      ansible.builtin.debug:
         msg:
+          - "{{ '{:=^70}'.format(' System information ') }}"
           - Hostname            = {{ ansible_facts['hostname'] }}
           - FQDN                = {{ ansible_facts['fqdn'] }}
-          - IP address          = {{ ansible_facts['default_ipv4']['address'] }}
+          - IP address          = {{ ansible_facts['default_ipv4']['address'] | default('Unknown') }}
+          - Python version      = {{ ansible_facts['python_version'] }}
+          - Python executable   = {{ ansible_facts['python']['executable'] }}
           - Architecture        = {{ ansible_facts['architecture'] }}
           - OS family           = {{ ansible_facts['os_family'] }}
           - OS Distribution     = {{ ansible_facts['distribution'] }}
@@ -41,21 +83,21 @@
       ansible.builtin.set_fact:
         skill_list: "{{ skills.split('\n') }}"
       when:
-        - skills is defined
+        - skills is defined and skills
         - skills is string
 
     - name: Show variable values when they are defined
-      debug:
+      ansible.builtin.debug:
         msg:
           - firstname = {{ firstname }}
           - lastname  = {{ lastname }}
           - skills    = {{ skill_list }}
           - holiday   = {{ holiday | default('Stayed at home') }}
       when:
-        - firstname  is defined
-        - lastname   is defined
+        - firstname  is defined and firstname
+        - lastname   is defined and lastname
         - skill_list is defined
 
-    - name: just ping
-      ping:
+    - name: Just ping the server
+      ansible.builtin.ping:
 
