@@ -3,9 +3,21 @@
   hosts: all
   become: false
 
+  #
+  # Vault password = ioQaVytKt2GtgsbOcQD3CjFGbaLL6g
+  #
   vars:
+    my_passwd: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      64326162316132396564386332653361646266313935303866313663366132386461646538313766
+      3361333231613536393839613336323464393238343331340a383731396561323761636163666463
+      35343961623530623665363139356432336230626333396238316530663263323466346337383139
+      3766616162363735630a353232376261323738643234303533386463303132643031613662366139
+      31623966323230346532356337353762663863653634633233333362346634616564
+    #
     # If called through a webhook, the extra variables are in the `awx_webhook_payload` variable
     # Convert that to the "normal" ones
+    #
     firstname: "{{ awx_webhook_payload['firstname'] if (awx_webhook_payload['firstname'] is defined) }}"
     lastname: "{{  awx_webhook_payload['lastname']  if (awx_webhook_payload['lastname']  is defined) }}"
     holiday: "{{   awx_webhook_payload['holiday']   if (awx_webhook_payload['holiday']   is defined) }}"
@@ -60,11 +72,12 @@
           - Memory (MB)         = {{ ansible_facts['memtotal_mb'] }}
           - Processor cores     = {{ ansible_facts['processor_cores'] }}
           - Virtualization role = {{ ansible_facts['virtualization_role'] }}
-          - Decrypted password  = {{ my_passwd | default('Unknown') }}
+          - Decrypted password  = {{ my_passwd | default('Unknown')}}
+          - "{{ '{:=^70}'.format(' Local facts (some of them) ') }}"
+          - System function     = {{ ansible_local['sysinfo']['system']['function']   | default('Unknown') }}
+          - System Location     = {{ ansible_local['sysinfo']['system']['location']   | default('Unknown') }}
+          - System VMware name  = {{ ansible_local['sysinfo']['system']['host_alias'] | default('Unknown') }}
           - "{{ '{:=^70}'.format(' Local facts ') }}"
-          - System function     = {{ ansible_local['sysinfo']['system']['function'] | default('Unknown') }}
-          - System Location     = {{ ansible_local['sysinfo']['system']['location'] | default('Unknown') }}
-          - System VMware name  = {{ ansible_local['sysinfo']['system']['vmware_name'] | default('Unknown') }}
 
     - name: Convert skills to list, if defined
       ansible.builtin.set_fact:
