@@ -34,7 +34,7 @@ class InventoryModule(BaseInventoryPlugin):
 
         display.vvvv("Schiphol GET %s" % url)
         try:
-            response = open_url(url, method="GET")
+            response = open_url(url, method="GET", validate_certs=False)
         except Exception as ex:
             raise Exception("Received HTTP error %s" % ex)
 
