@@ -36,7 +36,7 @@ class InventoryModule(BaseInventoryPlugin):
         try:
             response = open_url(url, method="GET")
         except Exception as ex:
-            raise AnsibleError("Received HTTP error %s" % ex)
+            raise Exception("Received HTTP error %s" % ex)
 
         # Get data from URL, decode as it is in bytes and split on line-ends
         data = list(map(str.strip, str(response.read().decode('utf-8')).split('\n')))
