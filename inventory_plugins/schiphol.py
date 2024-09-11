@@ -35,11 +35,12 @@ class InventoryModule(BaseInventoryPlugin):
         display.vvvv("Schiphol GET %s" % url)
         try:
             response = open_url(url, method="GET")
-        except HTTPError as ex:
+        except Exception as ex:
             raise AnsibleError("Received HTTP error %s" % ex)
 
         # Get data from URL, decode as it is in bytes and split on line-ends
         data = list(map(str.strip, str(response.read().decode('utf-8')).split('\n')))
+        display.vvvv("Schiphol data %s" % data)
 
         # Find all hosts and add these to the inventory
         for line in data:
